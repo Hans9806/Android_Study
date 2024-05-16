@@ -3,7 +3,7 @@ package com.busanit.ch01_layout.pr01
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.busanit.ch01_layout.databinding.ActivityBindingBinding
+import com.example.ch01_layout.databinding.ActivityBindingBinding
 
 class BindingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
