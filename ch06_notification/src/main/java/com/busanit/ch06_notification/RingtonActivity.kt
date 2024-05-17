@@ -57,7 +57,7 @@ class RingtonActivity : AppCompatActivity() {
                 // 매개변수3 : 반복 여부(횟수)
                 vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(500, 1000, 500, 2000),
                     intArrayOf(0, 50, 0, 200), -1))
-            } else {
+             } else {
                 vibrator.vibrate(500) // 500 밀리초 동안 진동
             }
         }
