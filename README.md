@@ -1672,8 +1672,94 @@ class MainActivity : AppCompatActivity() {
 
 ---
 
+#### notify 메서드
+`RecyclerView.Adapter`의 `notify` 메서드들은 다양한 데이터 변경 이벤트를 `RecyclerView`에 알리는 역할을 합니다.
 
 
+```kotlin
+// 전체 데이터 세트가 변경되었을 때
+adapter.notifyDataSetChanged()
+
+// 특정 위치의 아이템이 변경되었을 때
+adapter.notifyItemChanged(2)
+
+// 새로운 아이템이 특정 위치에 삽입되었을 때
+adapter.notifyItemInserted(1)
+
+// 특정 위치의 아이템이 제거되었을 때
+adapter.notifyItemRemoved(3)
+
+// 특정 범위의 아이템이 변경되었을 때
+adapter.notifyItemRangeChanged(1, 3)
+
+// 새로운 아이템이 특정 범위에 삽입되었을 때
+adapter.notifyItemRangeInserted(0, 2)
+
+// 특정 범위의 아이템이 제거되었을 때
+adapter.notifyItemRangeRemoved(1, 4)
+
+// 아이템이 한 위치에서 다른 위치로 이동되었을 때
+adapter.notifyItemMoved(2, 5)
+```
+
+## Fragment
+
+Fragment는 Android 애플리케이션의 UI와 동작을 모듈화하고 재사용할 수 있도록 도와주는 구성 요소입니다. 하나의 Activity 내에서 여러 Fragment를 추가하고, 제거하며, 교체할 수 있습니다. 이는 복잡한 UI를 더 유연하고 관리하기 쉽게 만들며, 다양한 화면 크기와 방향을 지원하는 데 유용합니다.
+
+필요성:
+- 재사용성: 여러 Activity에서 동일한 UI 구성 요소를 사용해야 할 때, Fragment를 사용하면 코드의 재사용성을 높일 수 있습니다.
+- 모듈화: UI와 동작을 독립적인 모듈로 분리하여 관리하기 쉽게 만듭니다.
+- 유연한 레이아웃: 다양한 화면 크기와 방향에 맞춰 동적으로 UI를 구성할 수 있습니다.
+- 멀티태스킹: 하나의 Activity 내에서 여러 Fragment를 독립적으로 관리하여 멀티태스킹을 지원할 수 있습니다.
+
+#### Activity와 Fragment의 차이점
+
+| 특징         | Activity                                                                 | Fragment                                                   |
+|------------------|-----------------------------------------------------------------------------|----------------------------------------------------------------|
+| 역할         | 애플리케이션의 단일 화면을 관리하는 기본 단위                               | Activity 내에서 UI와 동작의 부분을 관리하는 모듈              |
+| 생명주기     | 독립적인 생명주기를 가짐                                                   | Activity의 생명주기에 종속됨                                   |
+| UI 관리     | 전체 화면의 UI를 관리                                                      | 화면의 일부 UI를 관리                                         |
+| 관리 방법   | `Activity`를 시작하거나 종료하여 관리                                        | `FragmentManager`를 통해 추가, 제거, 교체 가능                 |
+| 다양한 화면 지원 | 각 화면에 대해 별도의 Activity 필요                                     | 하나의 Activity 내에서 여러 Fragment를 사용하여 다양한 화면 구성 가능 |
+| 멀티태스킹   | 여러 Activity를 동시에 실행하기 어려움                                     | 하나의 Activity 내에서 여러 Fragment를 독립적으로 관리 가능    |
+
+### 참고 문서
+- [Fragment 공식 문서](https://developer.android.com/guide/fragments)
 
 
+#### Fragment 생명주기
 
+Fragment는 Activity와 유사한 생명주기를 가지지만, 몇 가지 차이점이 있습니다. 아래는 주요 생명주기 메서드와 그 역할을 설명합니다.
+
+- onAttach(): Fragment가 Activity에 추가될 때 호출됩니다.
+- onCreate(): Fragment가 생성될 때 호출됩니다. 초기 설정 작업을 수행합니다.
+- onCreateView(): Fragment의 UI를 처음 생성할 때 호출됩니다. 레이아웃을 인플레이트합니다.
+- onViewCreated(): 뷰가 생성되고 나서 호출됩니다. 뷰의 초기 설정 작업을 수행합니다.
+- onStart(): Fragment가 사용자에게 보이기 시작할 때 호출됩니다.
+- onResume(): Fragment가 사용자와 상호작용을 시작할 때 호출됩니다.
+- onPause(): Fragment가 사용자와 상호작용을 중지할 때 호출됩니다.
+- onStop(): Fragment가 더 이상 사용자에게 보이지 않을 때 호출됩니다.
+- onDestroyView(): Fragment의 뷰가 제거될 때 호출됩니다.
+- onDestroy(): Fragment가 파괴될 때 호출됩니다.
+- onDetach(): Fragment가 Activity에서 분리될 때 호출됩니다.
+
+#### FragmentManager
+
+FragmentManager는 Fragment를 관리하고, Fragment 간의 트랜잭션을 수행하는 데 사용됩니다. FragmentManager는 Fragment를 추가, 교체, 제거하는 작업을 처리하며, Fragment 트랜잭션의 백스택을 관리할 수도 있습니다.
+
+FragmentManager를 사용하여 Fragment를 관리하는 주요 메서드는 다음과 같습니다:
+- `beginTransaction()`: Fragment 트랜잭션을 시작합니다.
+- `findFragmentById(int)`: 특정 ID를 가진 Fragment를 찾습니다.
+- `findFragmentByTag(String)`: 특정 태그를 가진 Fragment를 찾습니다.
+- `popBackStack()`: 백스택에서 가장 최근의 트랜잭션을 팝(제거)합니다.
+
+#### FragmentTransaction
+
+FragmentTransaction은 Fragment의 추가, 교체, 제거 등의 작업을 수행하는 데 사용됩니다. 각 트랜잭션은 일련의 작업으로 구성되며, `commit()`을 호출하여 트랜잭션을 완료합니다.
+
+FragmentTransaction의 주요 메서드는 다음과 같습니다:
+- `add(int, Fragment)`: 특정 컨테이너 뷰에 Fragment를 추가합니다.
+- `replace(int, Fragment)`: 특정 컨테이너 뷰의 기존 Fragment를 새 Fragment로 교체합니다.
+- `remove(Fragment)`: Fragment를 제거합니다.
+- `addToBackStack(String)`: 트랜잭션을 백스택에 추가하여 뒤로 가기 버튼을 통해 되돌릴 수 있게 합니다.
+- `commit()`: 트랜잭션을 완료하고 변경 사항을 적용합니다.
